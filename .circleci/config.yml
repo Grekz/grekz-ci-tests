@@ -16,6 +16,10 @@ commands:
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
+          name: Update pnpm package manager
+          command: |
+            pnpm add -g pnpm
+      - run:
           name: Install Dependencies
           command: |
             pnpm install
