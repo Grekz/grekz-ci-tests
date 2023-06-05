@@ -12,8 +12,7 @@ commands:
     steps:
       - restore_cache:
         name: Restore pnpm Package Cache
-        keys:
-          - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+        key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
       - run:
         name: Install pnpm package manager
         command: |
