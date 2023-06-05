@@ -18,6 +18,7 @@ commands:
       - run:
           name: Update pnpm package manager
           command: |
+            pnpm setup
             pnpm add -g pnpm
       - run:
           name: Install Dependencies
