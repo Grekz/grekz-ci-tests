@@ -14,15 +14,16 @@ commands:
       - run:
           name: Node.js version
           command: node --version
-      - run:
-          name: Install pnpm
-          command: |
-            yarn global add pnpm esbuild
-            pnpm config set store-dir ~/.pnpm-store
       - restore_cache:
           name: Restore pnpm Package Cache
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - run:
+          name: Install pnpm package manager
+          command: |
+            corepack enable
+            corepack prepare pnpm@latest-8 --activate
+            pnpm config set store-dir ~/.pnpm-store
       - run:
           name: Install Dependencies
           command: |
