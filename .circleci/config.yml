@@ -17,8 +17,7 @@ commands:
       - run:
           name: Install pnpm package manager
           command: |
-            corepack enable
-            corepack prepare pnpm@latest-8 --activate
+            npm install -g pnpm
       - run:
           name: Install Dependencies
           command: |
