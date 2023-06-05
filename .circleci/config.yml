@@ -1,6 +1,8 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
+orbs:
+  node: circleci/node@5.1.0
 
 alias:
   - &docker
@@ -10,23 +12,10 @@ commands:
   setup_node_modules:
     description: "Restore node_modules"
     steps:
-      - restore_cache:
-          name: Restore pnpm Package Cache
-          keys:
-            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - checkout
+      - node/install-packages:
       - run:
-          name: Install pnpm package manager
-          command: |
-            npm install -g pnpm
-      - run:
-          name: Install Dependencies
-          command: |
-            pnpm install
-      - save_cache:
-          name: Save pnpm Package Cache
-          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - node_modules
+        command: npm i -g pnpm
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
@@ -38,13 +27,11 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
-      - checkout
       - setup_node_modules
       - run: pnpm run test
   pnpm_build:
     docker: *docker
     steps:
-      - checkout
       - setup_node_modules
       - run: pnpm run build
 
