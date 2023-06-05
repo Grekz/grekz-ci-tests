@@ -11,15 +11,18 @@ commands:
     description: "Restore node_modules"
     steps:
       - checkout
+      - run:
+          name: Node.js version
+          command: node --version
+      - run:
+          name: Install pnpm
+          command: |
+            yarn global add pnpm esbuild
+            pnpm config set store-dir ~/.pnpm-store
       - restore_cache:
           name: Restore pnpm Package Cache
           keys:
             - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
-      - run:
-          name: Update pnpm package manager
-          command: |
-            pnpm setup
-            pnpm add -g pnpm
       - run:
           name: Install Dependencies
           command: |
