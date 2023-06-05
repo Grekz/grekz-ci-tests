@@ -13,9 +13,9 @@ commands:
     description: "Restore node_modules"
     steps:
       - checkout
-      - node/install-packages:
+      - node/install-packages
       - run:
-        command: npm i -g pnpm
+          command: npm i -g pnpm
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
